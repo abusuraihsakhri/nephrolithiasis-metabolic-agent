@@ -4,9 +4,10 @@ Domain: Nephrology & Dialysis Systems
 Standard: KDIGO / KDOQI Clinical Practice Guidelines
 """
 import datetime
+import math
 from enum import Enum
 from typing import Dict, Any, List, Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class UrgencyLevel(str, Enum):
@@ -30,6 +31,26 @@ class SystemTaskPayload(BaseModel):
     is_critical_flag: bool = Field(default=False, description="Emergency escalation or high priority trigger")
     attributes: Dict[str, Any] = Field(default_factory=dict, description="Metadata key-value pairs")
     timestamp: str = Field(default_factory=lambda: datetime.datetime.now(datetime.timezone.utc).isoformat())
+
+    @field_validator("task_id", "target_identifier", "status_descriptor")
+    @classmethod
+    def validate_no_phi_in_fields(cls, v: str) -> str:
+        """Prevent PHI leakage through identifier fields."""
+        if not isinstance(v, str):
+            return v
+        if len(v) > 256:
+            raise ValueError("Field exceeds maximum allowed length (256 characters)")
+        return v.strip()
+
+    @field_validator("primary_metric", "secondary_metric")
+    @classmethod
+    def validate_metric_values(cls, v: float) -> float:
+        """Ensure metric values are finite and within safe computational bounds."""
+        if math.isnan(v) or math.isinf(v):
+            raise ValueError("Metric value must be a finite number (not NaN or Infinity)")
+        if abs(v) > 1e9:
+            raise ValueError("Metric value exceeds safe computational bounds (|value| > 1e9)")
+        return v
 
 
 class AgentAlert(BaseModel):

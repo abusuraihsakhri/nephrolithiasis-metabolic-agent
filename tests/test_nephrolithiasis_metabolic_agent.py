@@ -3,6 +3,7 @@ Automated Pytest Test Suite for Nephrolithiasis Metabolic Agent.
 Domain: Nephrology & Dialysis Systems
 Standard: KDIGO / KDOQI Clinical Practice Guidelines
 """
+import math
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -21,6 +22,12 @@ def test_phi_guard_enforcement():
 
     # Clean text passes
     PHIGuard.assert_no_phi("Analytical assay specimen KEY-001 optimal")
+
+
+def test_phi_guard_redaction():
+    redacted = PHIGuard.redact_phi("Contact patient at 555-123-4567 for follow-up")
+    assert "555-123-4567" not in redacted
+    assert "[REDACTED_IDENTIFIER]" in redacted
 
 
 def test_specialized_workers():
@@ -63,3 +70,39 @@ def test_supervisor_consensus_and_audit():
     assert main(["audit", "--task-id", "CLI-TEST-01"]) == 0
     assert main(["chat", "Explain", "specifications"]) == 0
     assert main(["verify-audit"]) == 0
+
+
+def test_metric_validation_rejects_nan():
+    with pytest.raises(Exception):  # ValidationError
+        SystemTaskPayload(task_id="T-NAN", target_identifier="KEY-01", primary_metric=math.nan)
+
+
+def test_metric_validation_rejects_infinity():
+    with pytest.raises(Exception):  # ValidationError
+        SystemTaskPayload(task_id="T-INF", target_identifier="KEY-01", primary_metric=math.inf)
+
+
+def test_metric_validation_rejects_extreme_values():
+    with pytest.raises(Exception):  # ValidationError
+        SystemTaskPayload(task_id="T-EXTREME", target_identifier="KEY-01", primary_metric=1e10)
+
+
+def test_metric_validation_accepts_normal_values():
+    p = SystemTaskPayload(task_id="T-OK", target_identifier="KEY-01", primary_metric=25.0, secondary_metric=10.0)
+    assert p.primary_metric == 25.0
+    assert p.secondary_metric == 10.0
+
+
+def test_batch_file_not_found():
+    result = main(["batch", "-i", "nonexistent_file.csv"])
+    assert result == 1
+
+
+def test_phi_guard_blocks_ssn():
+    with pytest.raises(SecurityException):
+        PHIGuard.assert_no_phi("Patient SSN: 123-45-6789")
+
+
+def test_phi_guard_blocks_email():
+    with pytest.raises(SecurityException):
+        PHIGuard.assert_no_phi("Contact patient@example.com for results")

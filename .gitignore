@@ -1,10 +1,36 @@
+# Python cache
 __pycache__/
 *.pyc
 *.pyo
-.pytest_cache/
-results.csv
-output.csv
-*.log
+*.pyd
+*.egg-info/
 dist/
 build/
-*.egg-info/
+*.egg
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Test/CI cache
+.pytest_cache/
+htmlcov/
+.coverage
+*.log
+
+# Project outputs
+results.csv
+output.csv
+*.csv.bak
+
+# OS
+.DS_Store
+Thumbs.db

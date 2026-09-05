@@ -1,6 +1,6 @@
 # Nephrolithiasis Metabolic Agent
 
-> **Domain:** Computational Biology & AI Drug Discovery  
+> **Domain:** Computational Biology & AI Drug Discovery
 > **Reference Guidelines & Standards:** `wwPDB, IUPAC & CLSI Computational Guidelines`
 
 <div align="center">
@@ -18,7 +18,7 @@
 
 ## 📖 What It Does
 
-**Nephrolithiasis Metabolic Agent** is an advanced analytical and computational platform implementing 24h Urine Supersaturation & Recurrence Prevention Planner.
+**Nephrolithiasis Metabolic Agent** is an advanced analytical and computational platform implementing 24h Urine Supersaturation & Recurrence Prevention Planner. It provides multi-agent evaluation of clinical metrics with cryptographic audit trails and zero-PHI outbound protection.
 
 ---
 
@@ -32,6 +32,19 @@
 - **`SupersaturationIndexAgent`**: Specialized Sub-Agent 1 for nephrolithiasis-metabolic-agent
 - **`DietaryMetabolicEvaluatorAgent`**: Specialized Sub-Agent 2 for nephrolithiasis-metabolic-agent
 - **`PharmacologicPreventionAgent`**: Specialized Sub-Agent 3 for nephrolithiasis-metabolic-agent
+
+---
+
+## 🚀 Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/abusuraihsakhri/nephrolithiasis-metabolic-agent.git
+cd nephrolithiasis-metabolic-agent
+
+# Install dependencies
+pip install fastapi uvicorn pydantic pytest
+```
 
 ---
 
@@ -78,6 +91,18 @@ python cli.py --task-id <value> --target <value> --primary <value> --secondary <
 * **Active Learning Bayesian Calibration:** Dynamic tracker updating worker reliability weights and monitoring Brier calibration drift.
 * **FastAPI & Prometheus Telemetry:** Exposes OpenAPI 3.1 REST endpoints and operational Prometheus metrics (`/metrics`).
 
+### Security Configuration
+
+The audit trail requires a secure secret key. Set the `AUDIT_SECRET_KEY` environment variable:
+
+```bash
+# Linux/macOS
+export AUDIT_SECRET_KEY="your-secure-random-key-at-least-32-chars"
+
+# Windows
+set AUDIT_SECRET_KEY=your-secure-random-key-at-least-32-chars
+```
+
 ---
 
 ## 🧪 Testing & Verification
@@ -99,6 +124,46 @@ python simulator.py --tasks 1000 --concurrency 8
 ## 🐳 Container Deployment
 
 ```bash
+# Build and run with Docker
 docker build -t nephrolithiasis-metabolic-agent .
-docker run -p 8000:8000 nephrolithiasis-metabolic-agent
+docker run -p 8000:8000 -e AUDIT_SECRET_KEY=your-secure-key nephrolithiasis-metabolic-agent
+
+# Or use docker-compose
+AUDIT_SECRET_KEY=your-secure-key docker-compose up
 ```
+
+---
+
+## 📁 Project Structure
+
+```
+nephrolithiasis-metabolic-agent/
+├── agents/                          # Core agent modules
+│   ├── api.py                       # FastAPI REST server
+│   ├── base.py                      # Security, PHI Guard, Audit Trail
+│   ├── models.py                    # Pydantic data models
+│   ├── supervisor.py                # Supervisor orchestrator
+│   ├── workers.py                   # Specialized domain workers
+│   ├── llm_factory.py               # LLM provider factory
+│   ├── learning.py                  # Bayesian calibration engine
+│   ├── metrics.py                   # Prometheus metrics
+│   └── streamer.py                  # WebSocket telemetry
+├── tests/                           # Test suite
+│   ├── test_nephrolithiasis_metabolic_agent.py
+│   └── test_enrichment.py
+├── nephrolithiasis_metabolic_agent/ # Alternative package implementation
+├── cli.py                           # Command-line interface
+├── stone_mind.py                    # StoneMind clinical engine
+├── enrichment.py                    # Enrichment feature engines
+├── simulator.py                     # High-throughput simulator
+├── web/index.html                   # Operations console UI
+├── Dockerfile                       # Container definition
+├── docker-compose.yml               # Container orchestration
+└── pyproject.toml                   # Project configuration
+```
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
