@@ -32,3 +32,6 @@ nephrolithiasis-metabolic-engine = "nephrolithiasis_metabolic_agent.cli:main"
 [project.urls]
 Homepage = "https://github.com/abusuraihsakhri/nephrolithiasis-metabolic-agent"
 Repository = "https://github.com/abusuraihsakhri/nephrolithiasis-metabolic-engine.git"
+
+[tool.setuptools.packages.find]
+include = ["agents*", "nephrolithiasis_metabolic_agent*"]
