@@ -93,7 +93,7 @@ class StoneCoordinator:
             "stat_critical_alerts": stat_count,
             "warning_alerts": warn_count,
             "alerts": [a.to_dict() for a in all_alerts],
-            "guideline_standard": "AUA / EAU Urolithiasis Metabolic Guidelines",
+            "guideline_standard": "Prototype numeric rules (not validated clinical guidelines)",
             "consensus_summary": f"Multi-agent supervision completed across 3 sub-agents with status [{status.value}].",
         }
 
@@ -105,6 +105,6 @@ class StoneCoordinator:
         if "status" in q or "summary" in q:
             return f"StoneMind: 24-Hour Urine Metabolic Workup & Kidney Stone Recurrence Agent currently tracking {len(self.case_registry)} cases in on-premises memory."
         elif "guideline" in q or "standard" in q:
-            return "Active clinical surveillance operates under AUA / EAU Urolithiasis Metabolic Guidelines validated protocols."
+            return "Active clinical surveillance operates under Prototype numeric rules (not validated clinical guidelines) demonstration-only rules."
         else:
             return f"StoneMind: 24-Hour Urine Metabolic Workup & Kidney Stone Recurrence Agent executive agent online. Zero-PHI air-gapped monitoring active."
