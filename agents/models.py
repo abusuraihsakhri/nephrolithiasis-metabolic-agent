@@ -1,7 +1,7 @@
 """
 Pydantic v2 schemas and data definitions for Nephrolithiasis Metabolic Agent.
 Domain: Nephrology & Dialysis Systems
-Standard: KDIGO / KDOQI Clinical Practice Guidelines
+Standard: Prototype numeric rules — not clinical guideline criteria
 """
 import datetime
 import math
@@ -35,7 +35,7 @@ class SystemTaskPayload(BaseModel):
     @field_validator("task_id", "target_identifier", "status_descriptor")
     @classmethod
     def validate_no_phi_in_fields(cls, v: str) -> str:
-        """Prevent PHI leakage through identifier fields."""
+        """Apply basic field-length limits; PHI screening occurs in the supervisor."""
         if not isinstance(v, str):
             return v
         if len(v) > 256:
@@ -60,7 +60,7 @@ class AgentAlert(BaseModel):
     summary: str
     technical_details: str
     actionable_remediation: str
-    standard_reference: str = "KDIGO / KDOQI Clinical Practice Guidelines"
+    standard_reference: str = "Prototype numeric rules — not clinical guideline criteria"
     timestamp: str = Field(default_factory=lambda: datetime.datetime.now(datetime.timezone.utc).isoformat())
 
     def to_dict(self) -> Dict[str, Any]:
@@ -78,7 +78,7 @@ class ConsensusDossier(BaseModel):
     total_alerts: int
     critical_alerts_count: int
     alerts: List[AgentAlert]
-    standard_reference: str = "KDIGO / KDOQI Clinical Practice Guidelines"
+    standard_reference: str = "Prototype numeric rules — not clinical guideline criteria"
     consensus_summary: str
     audit_hash: str
     timestamp: str = Field(default_factory=lambda: datetime.datetime.now(datetime.timezone.utc).isoformat())
