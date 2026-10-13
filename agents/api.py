@@ -12,7 +12,7 @@ supervisor = SystemSupervisor(model_provider="mock")
 
 app = FastAPI(
     title="Nephrolithiasis Metabolic Agent API",
-    description="Enterprise Distributed Component Platform (Nephrology & Dialysis Systems)",
+    description="Research prototype for generic numeric rule evaluation; not validated clinical guidance",
     version="3.0.0-ENTERPRISE",
 )
 
@@ -23,7 +23,7 @@ class ChatRequest(BaseModel):
 
 @app.get("/health")
 def health():
-    return {"status": "HEALTHY", "service": "nephrolithiasis-metabolic-agent", "domain": "Nephrology & Dialysis Systems", "standard": "KDIGO / KDOQI Clinical Practice Guidelines", "version": "3.0.0-ENTERPRISE"}
+    return {"status": "HEALTHY", "service": "nephrolithiasis-metabolic-agent", "domain": "Nephrology & Dialysis Systems", "standard": "Unvalidated demonstration rules", "version": "3.0.0-ENTERPRISE"}
 
 
 @app.get("/metrics")
