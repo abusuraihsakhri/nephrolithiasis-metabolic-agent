@@ -56,7 +56,7 @@ def main(argv=None):
         dossier = supervisor.process_task(payload)
         print("=" * 80)
         print(f"  NEPHROLITHIASIS METABOLIC AGENT")
-        print(f"  Domain: Nephrology & Dialysis Systems | Standard: KDIGO / KDOQI Clinical Practice Guidelines")
+        print(f"  Domain: Nephrology & Dialysis Systems | Rules: unvalidated numeric prototype")
         print(f"  Dossier ID: {dossier.dossier_id} | Urgency: [{dossier.overall_urgency.value}]")
         print("=" * 80)
         for a in dossier.alerts:
