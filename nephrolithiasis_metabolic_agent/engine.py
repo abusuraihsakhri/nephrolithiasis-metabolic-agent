@@ -18,7 +18,7 @@ class ClinicalDomainEngine:
         if value > cls.PRIMARY_BASELINE_LIMIT:
             return {
                 "title": "Primary Metric Threshold Exceeded",
-                "finding": f"Observed value ({value:.2f}) exceeds Prototype numeric rules (not validated clinical guidelines) clinical baseline limit ({cls.PRIMARY_BASELINE_LIMIT:.1f}).",
+                "finding": f"Observed value ({value:.2f}) exceeds the prototype's arbitrary numeric threshold ({cls.PRIMARY_BASELINE_LIMIT:.1f}).",
                 "recommendation": "Review the example values; this is not a clinical recommendation.",
             }
         return None
