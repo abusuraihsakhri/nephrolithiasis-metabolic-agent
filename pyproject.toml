@@ -13,15 +13,22 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
-    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+    "Topic :: Scientific/Engineering :: Medical Science Apps",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 requires-python = ">=3.9"
-dependencies = []
+dependencies = [
+    "pydantic>=2.5,<3",
+    "fastapi>=0.110,<1",
+    "uvicorn>=0.27,<1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10"]
 
 [project.scripts]
 nephrolithiasis-metabolic-engine = "nephrolithiasis_metabolic_agent.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/abusuraihsakhri/nephrolithiasis-metabolic-engine"
+Homepage = "https://github.com/abusuraihsakhri/nephrolithiasis-metabolic-agent"
 Repository = "https://github.com/abusuraihsakhri/nephrolithiasis-metabolic-engine.git"
