@@ -12,6 +12,7 @@ import argparse
 import csv
 import datetime
 import json
+import math
 import sys
 import uuid
 from enum import Enum
@@ -71,6 +72,8 @@ class SupersaturationIndexAgent:
     def evaluate(self, payload: Dict[str, Any]) -> List[AgentAlert]:
         alerts = []
         val1 = float(payload.get("metric_primary", 15.0))
+        if not math.isfinite(val1):
+            raise ValueError("Primary metric must be finite")
         if val1 > 20.0:
             alerts.append(
                 AgentAlert(
@@ -89,8 +92,10 @@ class DietaryMetabolicEvaluatorAgent:
     """Specialized Sub-Agent 2 for nephrolithiasis-metabolic-agent"""
     def evaluate(self, payload: Dict[str, Any]) -> List[AgentAlert]:
         alerts = []
-        is_critical = bool(payload.get("critical_flag", False))
+        is_critical = str(payload.get("critical_flag", False)).strip().lower() in ("true", "1", "yes")
         val2 = float(payload.get("metric_secondary", 5.0))
+        if not math.isfinite(val2):
+            raise ValueError("Secondary metric must be finite")
         if is_critical or val2 > 12.0:
             alerts.append(
                 AgentAlert(
@@ -143,7 +148,9 @@ class StoneCoordinator:
         critical_count = sum(1 for a in all_alerts if a.severity == Severity.CRITICAL)
         warning_count = sum(1 for a in all_alerts if a.severity == Severity.WARNING)
 
-        overall_status = "CRITICAL_ACTION_REQUIRED" if critical_count > 0 else ("WARNING_ACTIVE" if warning_count > 0 else "CONCORDANT_NORMAL")
+        overall_status = ("CRITICAL_ACTION_REQUIRED" if critical_count > 0 else
+                          "WARNING_ACTIVE" if warning_count > 0 else
+                          "ADVISORY_ACTIVE" if all_alerts else "CONCORDANT_NORMAL")
 
         dossier = {
             "system": "nephrolithiasis-metabolic-agent",
