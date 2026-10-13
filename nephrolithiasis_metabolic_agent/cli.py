@@ -51,7 +51,7 @@ def main(argv=None):
         dossier = coordinator.process_case(case)
         print("=" * 80)
         print(f"  STONEMIND: 24-HOUR URINE METABOLIC WORKUP & KIDNEY STONE RECURRENCE AGENT")
-        print(f"  Domain: Urology / Nephrology | Standard: AUA / EAU Urolithiasis Metabolic Guidelines")
+        print(f"  Domain: Urology / Nephrology | Rules: unvalidated numeric prototype")
         print(f"  Case: {dossier['case_id']} | Status: [{dossier['overall_status']}] | Total Alerts: {dossier['total_alerts']}")
         print("=" * 80)
         for a in dossier["alerts"]:
