@@ -1,7 +1,7 @@
 """
 Specialized Domain Worker Agents for Nephrolithiasis Metabolic Agent.
 Domain: Nephrology & Dialysis Systems
-Standard: KDIGO / KDOQI Clinical Practice Guidelines
+Prototype-only numeric thresholds, not validated clinical standards
 """
 import uuid
 from typing import Dict, Any, List, Optional
