@@ -14,7 +14,7 @@ def create_app():
 
         app = FastAPI(
             title="StoneMind: 24-Hour Urine Metabolic Workup & Kidney Stone Recurrence Agent",
-            description="Analyzes 24h urine supersaturation (calcium oxalate, brushite, uric acid), citrate, and pH to formulate targeted stone prevention regimens.",
+            description="Prototype numeric rule demo; 24-hour urine workup and stone prevention have not been clinically implemented.",
             version="2.0.0-PRO",
         )
 
