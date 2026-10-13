@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 StoneMind: 24-Hour Urine Metabolic Workup & Kidney Stone Recurrence Agent
-Analyzes 24h urine supersaturation (calcium oxalate, brushite, uric acid), citrate, and pH to formulate targeted stone prevention regimens.
+Prototype generic numeric evaluations only; no actual 24-hour urine analytes or prevention regimen is implemented.
 
 Domain: Urology / Nephrology
 Author: Dr. Abu Suraih Sakhri
@@ -31,17 +31,17 @@ class Severity(str, Enum):
 # ==============================================================================
 
 class DomainKnowledgeRegistry:
-    """Enterprise domain rules, guideline matrices, and evidence benchmarks."""
+    """Legacy prototype rule registry; no evidence-based clinical validation."""
     SYSTEM_VERSION = "2.0.0-PRO-CLINICAL"
-    ZERO_PHI_COMPLIANCE = True
-    HIPAA_SAFE_HARBOR = "ACTIVE_ON_PREMISES"
+    ZERO_PHI_COMPLIANCE = False
+    HIPAA_SAFE_HARBOR = "NOT_VERIFIED"
 
     @staticmethod
     def audit_security_and_integrity(payload: Dict[str, Any]) -> List[str]:
         warnings = []
         for key in payload.keys():
             if any(phi_keyword in key.lower() for phi_keyword in ["patient_name", "ssn", "mrn_raw", "dob_raw"]):
-                warnings.append(f"PHI_DEFENSE_TRIGGERED: Direct identifier '{key}' masked to synthetic token.")
+                warnings.append(f"PHI_DEFENSE_TRIGGERED: Direct identifier '{key}' detected, but NOT redacted; do not submit PHI.")
         return warnings
 
 class AgentAlert:
@@ -166,7 +166,7 @@ class StoneCoordinator:
         if "summary" in q or "status" in q:
             return f"StoneMind: 24-Hour Urine Metabolic Workup & Kidney Stone Recurrence Agent currently tracking {len(self.case_registry)} cases in local air-gapped memory."
         elif "guidelines" in q or "protocol" in q:
-            return "All sub-agents operate under validated consensus clinical algorithms and CAP/CLSI/NCCN/WHO standards."
+            return "No validated clinical guidelines are implemented by this demonstration."
         else:
             return f"StoneMind: 24-Hour Urine Metabolic Workup & Kidney Stone Recurrence Agent executive agent online. Continuous supervisory monitoring active across all domain parameters."
 
@@ -181,7 +181,7 @@ def create_app():
 
         app = FastAPI(
             title="StoneMind: 24-Hour Urine Metabolic Workup & Kidney Stone Recurrence Agent",
-            description="Analyzes 24h urine supersaturation (calcium oxalate, brushite, uric acid), citrate, and pH to formulate targeted stone prevention regimens.",
+            description="Prototype numeric rules only; not a clinical decision support tool.",
             version="1.0.0",
         )
 
