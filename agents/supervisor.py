@@ -78,5 +78,5 @@ class SystemSupervisor:
 
     def query_supervisory_chat(self, query: str) -> str:
         PHIGuard.assert_no_phi(query)
-        prompt = f"Supervisor inquiry for Nephrolithiasis Metabolic Agent under KDIGO / KDOQI Clinical Practice Guidelines: {query}"
+        prompt = f"Prototype supervisor inquiry for Nephrolithiasis Metabolic Agent: {query}"
         return self.llm.invoke(prompt)
