@@ -31,3 +31,12 @@ def test_phi_in_nested_attributes_rejected():
     )
     with pytest.raises(SecurityException):
         supervisor.process_task(payload)
+
+def test_audit_fields_cannot_be_repartitioned_at_delimiters():
+    trail = AuditTrail(secret_key=KEY)
+    trail.log("alice|admin", "service", "COMPLETE", {"status": "SUCCESS"})
+    assert trail.verify_integrity()
+    # With naive pipe-joined signatures these two rows had identical signed bytes.
+    trail.logs[0]["actor"] = "alice"
+    trail.logs[0]["actor_tier"] = "admin|service"
+    assert not trail.verify_integrity()
