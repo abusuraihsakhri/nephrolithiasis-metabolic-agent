@@ -1,236 +1,78 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nephrolithiasis Metabolic Engine — Operations Console</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #090d16;
-            --card: #111827;
-            --border: #1f293d;
-            --accent: #3b82f6;
-            --accent-glow: rgba(59, 130, 246, 0.25);
-            --text: #f3f4f6;
-            --text-muted: #9ca3af;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --success: #10b981;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            padding: 2rem;
-            min-height: 100vh;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        .header-title h1 { font-size: 1.6rem; font-weight: 700; color: #fff; }
-        .header-title p { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem; }
-        .badge {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            background: var(--accent-glow);
-            color: var(--accent);
-            border: 1px solid var(--accent);
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 1.5rem;
-        }
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-        }
-        .card h2 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .form-group { margin-bottom: 1rem; }
-        label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.4rem; }
-        input, select, textarea {
-            width: 100%;
-            padding: 0.65rem 0.9rem;
-            background: #0d1322;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: #fff;
-            font-family: inherit;
-            font-size: 0.9rem;
-        }
-        input:focus, textarea:focus { outline: none; border-color: var(--accent); }
-        .btn {
-            background: var(--accent);
-            color: #fff;
-            border: none;
-            padding: 0.7rem 1.4rem;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            width: 100%;
-        }
-        .btn:hover { background: #2563eb; }
-        .terminal {
-            background: #060911;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            color: #10b981;
-            height: 380px;
-            overflow-y: auto;
-            white-space: pre-wrap;
-        }
-        .metrics-bar {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        .metric-box {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1rem;
-            text-align: center;
-        }
-        .metric-val { font-size: 1.4rem; font-weight: 700; color: #fff; margin-top: 0.25rem; }
-        .metric-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Nephrolithiasis Metabolic Agent — Rule Demonstration</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color-scheme:dark;background:#0b1422;color:#eaf1fc}
+    *{box-sizing:border-box}body{max-width:1120px;margin:0 auto;padding:24px 18px 50px}
+    h1{font-size:clamp(1.55rem,3.1vw,2.3rem);letter-spacing:-.025em;margin:0}
+    h2{font-size:1.16rem;margin:0 0 18px}
+    p{line-height:1.55;color:#bac8db}
+    .kicker{font-size:.8rem;letter-spacing:.11em;text-transform:uppercase;color:#8fc7ff;font-weight:700}
+    header{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:start;border-bottom:1px solid #324259;padding-bottom:18px;margin-bottom:18px}
+    .tag{display:inline-flex;padding:7px 12px;border:1px solid #45648a;border-radius:30px;color:#c5e2ff;background:#142b45;font-size:.82rem}
+    .notice{border-left:3px solid #e9b75b;background:#2c281c;padding:10px 15px;border-radius:5px;margin:20px 0;color:#ffe9bb;line-height:1.55}
+    .grid{display:grid;grid-template-columns:minmax(300px,1fr) minmax(320px,1fr);gap:18px}
+    .panel{background:#132136;border:1px solid #33455e;border-radius:13px;padding:20px}
+    .fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .wide{grid-column:1/-1}
+    label{display:block;color:#cad6e8;font-size:.88rem;font-weight:600;margin-bottom:6px}
+    input,select{width:100%;background:#0b1626;color:#fff;border:1px solid #536780;border-radius:7px;padding:11px 12px;font:inherit}
+    input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid #94c9fc;outline-offset:2px}
+    .hint{font-size:.78rem;color:#aebcd2;margin-top:5px}
+    .check{display:flex;align-items:center;gap:10px;color:#d7e4f5}
+    .check input{width:18px;height:18px}
+    .check label{margin:0}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    button{background:#3685dd;color:white;border:1px solid #7fb8fa;border-radius:7px;padding:11px 17px;font:inherit;font-weight:700;cursor:pointer}
+    button:hover{background:#236dbd}
+    button.secondary{background:#203650}
+    button:disabled{opacity:.45;cursor:not-allowed}
+    pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:560px;overflow-y:auto;min-height:220px;background:#0b1626;border:1px solid #324259;border-radius:8px;padding:16px;color:#d6e8ff;font-size:.83rem;line-height:1.6}
+    .stats{display:flex;gap:14px;flex-wrap:wrap;color:#bacbe4;font-size:.85rem;margin-bottom:14px}
+    .stats strong{color:#fff}
+    #error{color:#ffb6ab;min-height:1.5rem}
+    footer{font-size:.84rem;margin-top:22px;color:#b3c4d9}
+    a{color:#9fd1ff}
+    @media(max-width:740px){.grid{grid-template-columns:1fr}.fields{grid-template-columns:1fr}.wide{grid-column:auto}.panel{padding:16px}body{padding:18px 12px 35px}}
+  </style>
 </head>
 <body>
-
-    <div class="header">
-        <div class="header-title">
-            <h1>Nephrolithiasis Metabolic Engine</h1>
-            <p>Domain: Clinical & Cryptographic AI | Standard: CAP / CLSI / NIST Standards | LabMind-Atlas Architecture</p>
-        </div>
-        <div>
-            <span class="badge">Air-Gapped Active</span>
-            <span class="badge" style="background: rgba(16,185,129,0.2); color: #10b981; border-color: #10b981;">Zero-PHI Guard Active</span>
-        </div>
+  <header>
+    <div><div class="kicker">Research prototype · Local browser demonstration</div>
+      <h1>Nephrolithiasis Metabolic Agent</h1>
+      <p>Explore the repository's existing generic rule-engine thresholds using synthetic inputs.</p>
     </div>
-
-    <div class="metrics-bar">
-        <div class="metric-box">
-            <div class="metric-label">System Status</div>
-            <div class="metric-val" style="color: var(--success);" id="m-status">OPTIMAL</div>
+    <span class="tag">Client-side · No backend required</span>
+  </header>
+  <aside class="notice" role="note"><strong>Not a clinical decision support tool.</strong>
+    These scores and thresholds (25 and 12) are placeholders from the source code, not defined 24-hour urine analytes or validated AUA/EAU cutoffs. Do not enter patient data or use results for diagnosis, prescribing, or urgent escalation.</aside>
+  <main class="grid">
+    <section class="panel" aria-labelledby="form-title">
+      <h2 id="form-title">Rule inputs</h2>
+      <form id="audit-form" novalidate>
+        <div class="fields">
+          <div><label for="task-id">Synthetic task ID</label><input id="task-id" value="DEMO-001" maxlength="64" required></div>
+          <div><label for="target-id">Synthetic target ID</label><input id="target-id" value="SPECIMEN-01" maxlength="64" required></div>
+          <div><label for="primary">Primary numeric metric</label><input id="primary" type="number" value="29.4" step="any" required><div class="hint">Demo elevated if greater than 25</div></div>
+          <div><label for="secondary">Secondary numeric metric</label><input id="secondary" type="number" value="14.8" step="any" required><div class="hint">Demo elevated if greater than 12</div></div>
+          <div class="wide"><label for="descriptor">Status descriptor</label><select id="descriptor"><option value="NOMINAL">NOMINAL</option><option value="DISCORDANT_ANOMALY" selected>DISCORDANT_ANOMALY</option><option value="OPTIMAL">OPTIMAL</option></select></div>
+          <div class="wide check"><input id="critical" type="checkbox"><label for="critical">Set simulated critical flag</label></div>
         </div>
-        <div class="metric-box">
-            <div class="metric-label">Tasks Processed</div>
-            <div class="metric-val" id="m-tasks">142</div>
-        </div>
-        <div class="metric-box">
-            <div class="metric-label">Audit Blocks Signed</div>
-            <div class="metric-val" id="m-audit">142</div>
-        </div>
-        <div class="metric-box">
-            <div class="metric-label">PHI Interceptions</div>
-            <div class="metric-val" style="color: var(--accent);" id="m-phi">0</div>
-        </div>
-    </div>
-
-    <div class="grid">
-        <div class="card">
-            <h2>⚙️ Dispatch Distributed Component Audit</h2>
-            <div class="form-group">
-                <label>Task / Sample ID</label>
-                <input type="text" id="task_id" value="TASK-2026-LIVE-01">
-            </div>
-            <div class="form-group">
-                <label>Target Identifier</label>
-                <input type="text" id="target_id" value="SPECIMEN-ALPHA-77">
-            </div>
-            <div class="form-group">
-                <label>Primary Measurement / Value</label>
-                <input type="number" id="primary_metric" value="29.4" step="0.1">
-            </div>
-            <div class="form-group">
-                <label>Secondary Metric / Kinetic Index</label>
-                <input type="number" id="secondary_metric" value="14.8" step="0.1">
-            </div>
-            <div class="form-group">
-                <label>Status / Phenotype Descriptor</label>
-                <input type="text" id="status_descriptor" value="DISCORDANT_ANOMALY">
-            </div>
-            <div class="form-group">
-                <label><input type="checkbox" id="is_critical" checked> Trigger Emergency / Critical Flag</label>
-            </div>
-            <button class="btn" onclick="runAudit()">Execute Distributed Component Audit</button>
-        </div>
-
-        <div class="card">
-            <h2>📊 Real-Time Consensus Dossier & Audit Log</h2>
-            <div class="terminal" id="outputConsole">// Nephrolithiasis Metabolic Engine Operations Console Ready
-// Connection established with Air-Gapped Supervisor
-// Cryptographic HMAC-SHA256 audit ledger loaded.
-// Ready for live task payload dispatch...</div>
-        </div>
-    </div>
-
-    <script>
-        async function runAudit() {
-            const consoleEl = document.getElementById('outputConsole');
-            consoleEl.innerText = "// Dispatching task across specialized workers...
-// Invoking InvariantQCWorker, SafetyEscalationWorker, ProtocolWorker...";
-
-            const payload = {
-                task_id: document.getElementById('task_id').value,
-                target_identifier: document.getElementById('target_id').value,
-                primary_metric: parseFloat(document.getElementById('primary_metric').value),
-                secondary_metric: parseFloat(document.getElementById('secondary_metric').value),
-                status_descriptor: document.getElementById('status_descriptor').value,
-                is_critical_flag: document.getElementById('is_critical').checked
-            };
-
-            try {
-                const res = await fetch('/api/audit', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const data = await res.json();
-                consoleEl.innerText = JSON.stringify(data, null, 2);
-                document.getElementById('m-tasks').innerText = parseInt(document.getElementById('m-tasks').innerText) + 1;
-                document.getElementById('m-audit').innerText = parseInt(document.getElementById('m-audit').innerText) + 1;
-            } catch (err) {
-                consoleEl.innerText = "// Offline / Simulation Output:\n" + JSON.stringify({
-                    dossier_id: "DOSSIER-SIM-" + Math.floor(Math.random()*10000),
-                    system: "nephrolithiasis-metabolic-engine",
-                    domain: "Clinical & Cryptographic AI",
-                    task_id: payload.task_id,
-                    overall_urgency: payload.is_critical_flag ? "CRITICAL_STAT_PANIC" : "ELEVATED_RISK",
-                    integrity_status: "DISCORDANT_ANOMALY",
-                    alerts: [
-                        { worker: "InvariantQCWorker", alert: "Primary metric exceeds upper reference bound" },
-                        { worker: "SafetyEscalationWorker", alert: "Critical emergency interlock flag active" }
-                    ],
-                    audit_hash: "HMAC_SHA256_e83f9a72b941d6c381f9"
-                }, null, 2);
-            }
-        }
-    </script>
+        <p id="error" role="alert" aria-live="polite"></p>
+        <div class="actions"><button type="submit">Evaluate demonstration</button><button type="button" class="secondary" id="download" disabled>Download result JSON</button></div>
+      </form>
+    </section>
+    <section class="panel" aria-labelledby="output-title">
+      <h2 id="output-title">Deterministic result</h2>
+      <div class="stats"><span>Evaluations this session: <strong id="runs">0</strong></span><span>Execution: <strong>In this browser</strong></span></div>
+      <pre id="output" role="status" aria-live="polite">Submit synthetic inputs to inspect the rule evaluation. No fabricated audit signatures or server responses are produced.</pre>
+    </section>
+  </main>
+  <footer>This interface implements only the generic demonstration rules. The Python CLI, API, and HMAC audit trail run separately on a configured server. No inputs are sent over the network or stored by this page. <a href="https://github.com/abusuraihsakhri/nephrolithiasis-metabolic-agent">View repository</a>.</footer>
+  <script src="./app.js" defer></script>
 </body>
 </html>

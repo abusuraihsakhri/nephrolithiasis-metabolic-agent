@@ -1,0 +1,10 @@
+"use strict";
+const test = require("node:test");
+const assert = require("node:assert/strict");
+const {evaluateDemo} = require("./app.js");
+const nominal = {task_id:"DEMO-1",target_identifier:"SPEC-1",primary_metric:25,secondary_metric:12,status_descriptor:"NOMINAL",is_critical_flag:false};
+test("threshold equality remains nominal",()=>{const r=evaluateDemo(nominal);assert.equal(r.total_alerts,0);assert.equal(r.overall_urgency,"ROUTINE");});
+test("high primary and secondary produce two elevated alerts",()=>{const r=evaluateDemo({...nominal,primary_metric:25.1,secondary_metric:12.1});assert.equal(r.total_alerts,2);assert.equal(r.overall_urgency,"ELEVATED_RISK");});
+test("critical flag takes precedence",()=>{const r=evaluateDemo({...nominal,is_critical_flag:true,status_descriptor:"DISCORDANT"});assert.equal(r.overall_urgency,"CRITICAL_STAT_PANIC");assert.equal(r.critical_alerts_count,1);});
+test("nonfinite and invalid IDs rejected",()=>{assert.throws(()=>evaluateDemo({...nominal,primary_metric:NaN}));assert.throws(()=>evaluateDemo({...nominal,task_id:"John Smith"}));});
+test("demonstration never invents an audit signature",()=>{assert.equal(evaluateDemo(nominal).audit_signature,null);});

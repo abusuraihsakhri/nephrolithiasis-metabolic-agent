@@ -1,7 +1,7 @@
 """
 Nephrolithiasis Metabolic Agent — Enterprise Automated Analytical Suite.
 Domain: Nephrology & Dialysis Systems
-Standard: KDIGO / KDOQI Clinical Practice Guidelines
+Prototype-only placeholder thresholds; no validated clinical standards
 
 """
 __version__ = "3.0.0-ENTERPRISE"

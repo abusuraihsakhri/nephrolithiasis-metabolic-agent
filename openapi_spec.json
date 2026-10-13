@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Nephrolithiasis Metabolic Engine API",
-    "description": "Enterprise Distributed Component Platform (Clinical & Cryptographic AI) adhering to CAP / CLSI / NIST Standards.",
+    "description": "Generic numeric rule demonstration; no validated clinical guideline or regulatory compliance claim.",
     "version": "3.0.0-ENTERPRISE",
     "contact": {
       "name": "Dr. Abu Suraih Sakhri",
@@ -25,7 +25,7 @@
         "summary": "Prometheus operational metrics",
         "responses": {
           "200": {
-            "description": "Prometheus text metrics"
+            "description": "JSON metrics"
           }
         }
       }

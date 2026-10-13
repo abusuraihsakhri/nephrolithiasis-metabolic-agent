@@ -1,7 +1,7 @@
 """
 Clinical Data Models & Enums for StoneMind: 24-Hour Urine Metabolic Workup & Kidney Stone Recurrence Agent.
 Domain: Urology / Nephrology
-Standard: AUA / EAU Urolithiasis Metabolic Guidelines
+Standard: Prototype numeric rules (not validated clinical guidelines)
 """
 import datetime
 from dataclasses import dataclass, field
@@ -43,7 +43,7 @@ class AgentAlert:
     title: str
     clinical_finding: str
     actionable_recommendation: str
-    guideline_citation: str = "AUA / EAU Urolithiasis Metabolic Guidelines"
+    guideline_citation: str = "Prototype numeric rules (not validated clinical guidelines)"
     timestamp: str = field(default_factory=lambda: datetime.datetime.now(datetime.timezone.utc).isoformat())
 
     def to_dict(self) -> Dict[str, Any]:

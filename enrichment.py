@@ -1,6 +1,6 @@
 """
 Enrichment Feature Implementation for nephrolithiasis-metabolic-agent.
-Generated based on domain-specific requirements in specifications.
+Generic scaffolded numeric threshold engines; not valid eGFR, dialysis or treatment models.
 """
 from dataclasses import dataclass, field
 from typing import Dict, Any, List, Optional, Tuple

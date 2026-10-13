@@ -7,7 +7,7 @@ import json
 import sys
 from agents.models import SystemTaskPayload
 from agents.supervisor import SystemSupervisor
-from agents.base import AuditLogger
+from agents.base import AuditLogger, SecurityException
 
 supervisor = SystemSupervisor(model_provider="mock")
 
@@ -56,7 +56,7 @@ def main(argv=None):
         dossier = supervisor.process_task(payload)
         print("=" * 80)
         print(f"  NEPHROLITHIASIS METABOLIC AGENT")
-        print(f"  Domain: Nephrology & Dialysis Systems | Standard: KDIGO / KDOQI Clinical Practice Guidelines")
+        print(f"  Domain: Nephrology & Dialysis Systems | Rules: unvalidated numeric prototype")
         print(f"  Dossier ID: {dossier.dossier_id} | Urgency: [{dossier.overall_urgency.value}]")
         print("=" * 80)
         for a in dossier.alerts:
@@ -112,7 +112,7 @@ def main(argv=None):
                 row_dict["total_alerts"] = dossier.total_alerts
                 row_dict["audit_hash"] = dossier.audit_hash
                 out_rows.append(row_dict)
-            except (ValueError, KeyError) as e:
+            except (ValueError, KeyError, SecurityException) as e:
                 errors += 1
                 print(f"Warning: Skipping row due to error: {e}", file=sys.stderr)
 

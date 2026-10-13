@@ -24,7 +24,7 @@ PHI_PATTERNS = [
 
 
 class SecurityException(Exception):
-    """Raised when outbound data violates HIPAA Safe Harbor or contains raw PHI."""
+    """Raised when a known identifier pattern is detected; this is not comprehensive PHI screening."""
     pass
 
 
@@ -68,6 +68,18 @@ class AuditTrail:
         self.secret_key = resolved_key.encode("utf-8")
         self.logs: List[Dict[str, Any]] = []
 
+    @staticmethod
+    def _signing_bytes(entry: Dict[str, Any]) -> bytes:
+        """Encode fields without ambiguous delimiter boundaries."""
+        fields = (
+            "audit_id", "timestamp", "actor", "actor_tier",
+            "event_type", "payload_hash", "prev_hash",
+        )
+        return json.dumps(
+            [entry[field] for field in fields],
+            separators=(",", ":"), ensure_ascii=False,
+        ).encode("utf-8")
+
     def log(self, actor: str, actor_tier: str, event_type: str, details: Dict[str, Any]) -> Dict[str, Any]:
         payload_str = json.dumps(details, sort_keys=True)
         assert_no_phi(payload_str)
@@ -75,8 +87,6 @@ class AuditTrail:
         audit_id = f"AUDIT-{int(time.time()*1000)}-{len(self.logs)+1}"
         ts = datetime.now(timezone.utc).isoformat()
         prev_hash = self.logs[-1]["current_hash"] if self.logs else "GENESIS_BLOCK_0000000000000000"
-        sign_string = f"{audit_id}|{ts}|{actor}|{actor_tier}|{event_type}|{payload_hash}|{prev_hash}"
-        signature = hmac.new(self.secret_key, sign_string.encode("utf-8"), hashlib.sha256).hexdigest()
         entry = {
             "audit_id": audit_id,
             "timestamp": ts,
@@ -85,20 +95,33 @@ class AuditTrail:
             "event_type": event_type,
             "payload_hash": payload_hash,
             "prev_hash": prev_hash,
-            "current_hash": signature,
         }
+        entry["current_hash"] = hmac.new(
+            self.secret_key, self._signing_bytes(entry), hashlib.sha256
+        ).hexdigest()
         self.logs.append(entry)
         return entry
 
     def verify_integrity(self) -> bool:
-        for i, entry in enumerate(self.logs):
-            prev = self.logs[i-1]["current_hash"] if i > 0 else "GENESIS_BLOCK_0000000000000000"
-            if entry["prev_hash"] != prev:
+        """Verify both chain continuity and every stored HMAC signature."""
+        previous_hash = "GENESIS_BLOCK_0000000000000000"
+        for entry in self.logs:
+            try:
+                if entry["prev_hash"] != previous_hash:
+                    return False
+                expected = hmac.new(
+                    self.secret_key, self._signing_bytes(entry), hashlib.sha256
+                ).hexdigest()
+                if not hmac.compare_digest(expected, entry["current_hash"]):
+                    return False
+                previous_hash = entry["current_hash"]
+            except (KeyError, TypeError, AttributeError):
                 return False
         return True
 
     def get_trail(self) -> List[Dict[str, Any]]:
-        return self.logs
+        """Return defensive copies so callers cannot modify the signed ledger."""
+        return [entry.copy() for entry in self.logs]
 
 
 GLOBAL_AUDIT = AuditTrail()

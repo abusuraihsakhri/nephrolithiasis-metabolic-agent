@@ -33,5 +33,22 @@ def test_cli():
 
 def test_domain_registry():
     from stone_mind import DomainKnowledgeRegistry
-    assert DomainKnowledgeRegistry.ZERO_PHI_COMPLIANCE is True
+    assert DomainKnowledgeRegistry.ZERO_PHI_COMPLIANCE is False
     assert "PRO" in DomainKnowledgeRegistry.SYSTEM_VERSION
+
+def test_legacy_string_false_is_not_critical():
+    coord = StoneCoordinator()
+    dossier = coord.audit_case({"metric_primary": 2.0, "metric_secondary": 2.0, "critical_flag": "False"})
+    assert dossier["overall_status"] == "CONCORDANT_NORMAL"
+
+def test_legacy_advisory_is_not_reported_normal():
+    coord = StoneCoordinator()
+    dossier = coord.audit_case({"metric_primary": 2.0, "metric_secondary": 2.0, "status_text": "DISCORDANT"})
+    assert dossier["overall_status"] == "ADVISORY_ACTIVE"
+
+def test_legacy_rejects_nonfinite_numbers():
+    coord = StoneCoordinator()
+    with pytest.raises(ValueError):
+        coord.audit_case({"metric_primary": float("nan")})
+    with pytest.raises(ValueError):
+        coord.audit_case({"metric_secondary": float("inf")})

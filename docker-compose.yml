@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   nephrolithiasis-metabolic-engine:
     build: .
@@ -7,7 +5,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - AUDIT_SECRET_KEY=${AUDIT_SECRET_KEY:-please-generate-a-secure-random-key-of-at-least-32-chars}
+      - AUDIT_SECRET_KEY=${AUDIT_SECRET_KEY:?Set a unique secret of at least 32 characters}
       - MODEL_PROVIDER=mock
     restart: unless-stopped
     healthcheck:
