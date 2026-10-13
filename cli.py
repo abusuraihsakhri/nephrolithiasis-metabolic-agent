@@ -7,7 +7,7 @@ import json
 import sys
 from agents.models import SystemTaskPayload
 from agents.supervisor import SystemSupervisor
-from agents.base import AuditLogger
+from agents.base import AuditLogger, SecurityException
 
 supervisor = SystemSupervisor(model_provider="mock")
 
@@ -112,7 +112,7 @@ def main(argv=None):
                 row_dict["total_alerts"] = dossier.total_alerts
                 row_dict["audit_hash"] = dossier.audit_hash
                 out_rows.append(row_dict)
-            except (ValueError, KeyError) as e:
+            except (ValueError, KeyError, SecurityException) as e:
                 errors += 1
                 print(f"Warning: Skipping row due to error: {e}", file=sys.stderr)
 
