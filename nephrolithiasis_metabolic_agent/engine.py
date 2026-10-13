@@ -1,7 +1,7 @@
 """
 Clinical Algorithmic Engine & Guideline Rules for StoneMind: 24-Hour Urine Metabolic Workup & Kidney Stone Recurrence Agent.
 Domain: Urology / Nephrology
-Standard: AUA / EAU Urolithiasis Metabolic Guidelines
+Standard: Prototype numeric rules (not validated clinical guidelines)
 """
 import math
 from typing import Dict, Any, List, Optional
@@ -9,7 +9,7 @@ from .models import ClinicalCasePayload, AgentAlert, UrgencyLevel, ClinicalInteg
 
 
 class ClinicalDomainEngine:
-    GUIDELINE = "AUA / EAU Urolithiasis Metabolic Guidelines"
+    GUIDELINE = "Prototype numeric rules (not validated clinical guidelines)"
     PRIMARY_BASELINE_LIMIT = 20.0
     SECONDARY_ALERT_LIMIT = 10.0
 
@@ -18,8 +18,8 @@ class ClinicalDomainEngine:
         if value > cls.PRIMARY_BASELINE_LIMIT:
             return {
                 "title": "Primary Metric Threshold Exceeded",
-                "finding": f"Observed value ({value:.2f}) exceeds AUA / EAU Urolithiasis Metabolic Guidelines clinical baseline limit ({cls.PRIMARY_BASELINE_LIMIT:.1f}).",
-                "recommendation": "Perform immediate secondary verification and calibration review.",
+                "finding": f"Observed value ({value:.2f}) exceeds Prototype numeric rules (not validated clinical guidelines) clinical baseline limit ({cls.PRIMARY_BASELINE_LIMIT:.1f}).",
+                "recommendation": "Review the example values; this is not a clinical recommendation.",
             }
         return None
 
@@ -29,7 +29,7 @@ class ClinicalDomainEngine:
             return {
                 "title": "STAT Kinetic Escalation Triggered",
                 "finding": f"Kinetic parameter ({value:.2f}) with STAT={is_stat} requires prioritized supervision.",
-                "recommendation": "Activate closed-loop verbal clinician notification protocol per Joint Commission standards.",
+                "recommendation": "Review the synthetic flag; this is not a clinical escalation recommendation.",
             }
         return None
 
@@ -40,6 +40,6 @@ class ClinicalDomainEngine:
             return {
                 "title": "Phenotypic / Biomarker Discordance Identified",
                 "finding": f"Status flag '{status_flag}' indicates divergence from standard diagnostic concordance.",
-                "recommendation": f"Order reflex confirmatory testing per AUA / EAU Urolithiasis Metabolic Guidelines clinical recommendations.",
+                "recommendation": f"Review the example descriptor; no clinical testing recommendation is implied.",
             }
         return None
